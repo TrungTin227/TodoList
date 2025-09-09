@@ -1,2 +1,0 @@
-﻿namespace TodoList.Infrastructure.Identity;
-

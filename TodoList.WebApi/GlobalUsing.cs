@@ -1,0 +1,10 @@
+﻿global using TodoList.Application;
+global using TodoList.Infrastructure.Auth;
+global using TodoList.Infrastructure.DependencyInjection;
+global using TodoList.WebApi.Extensions;
+global using TodoList.WebApi.Startup;
+global using TodoList.Application.Features.Auth.Commands.Login;
+global using TodoList.Application.Features.Auth.Commands.Register;
+global using TodoList.Application.Features.Auth.DTOs;
+global using TodoList.WebApi.Contracts;
+global using TodoList.WebApi.Results;

@@ -1,0 +1,12 @@
+D:\TodoList\TodoList.Domain\bin\Debug\net9.0\TodoList.Domain.deps.json
+D:\TodoList\TodoList.Domain\bin\Debug\net9.0\TodoList.Domain.dll
+D:\TodoList\TodoList.Domain\bin\Debug\net9.0\TodoList.Domain.pdb
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\TodoList.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\TodoList.Domain.AssemblyInfoInputs.cache
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\TodoList.Domain.AssemblyInfo.cs
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\TodoList.Domain.csproj.CoreCompileInputs.cache
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\TodoList.Domain.sourcelink.json
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\TodoList.Domain.dll
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\refint\TodoList.Domain.dll
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\TodoList.Domain.pdb
+D:\TodoList\TodoList.Domain\obj\Debug\net9.0\ref\TodoList.Domain.dll

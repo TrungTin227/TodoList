@@ -1,19 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
-
 namespace TodoList.Infrastructure.Auth;
 
-public sealed  class Role :  IdentityRole<Guid>
+public sealed class Role : IdentityRole<Guid>, IAuditable, ISoftDelete
 {
-    // Audit fields
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
+    public Guid? CreatedBy { get; set; }
+    public DateTime? UpdatedAtUtc { get; set; }
+    public Guid? UpdatedBy { get; set; }
 
-    // Lưu Guid của User đã tạo
-    public Guid CreatedBy { get; set; }
-
-    public DateTime UpdatedAt { get; set; }
-
-    // Lưu Guid của User đã cập nhật
-    public Guid UpdatedBy { get; set; }
-
-    public bool IsDeleted { get; set; }   
+    public bool IsDeleted { get; set; }
+    public DateTime? DeletedAtUtc { get; set; }
+    public Guid? DeletedBy { get; set; }
 }

@@ -9,19 +9,32 @@ public sealed class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbConte
     public AppDbContext CreateDbContext(string[] args)
     {
         var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
+
+        // Tự dò nơi có appsettings.json (ưu tiên WebApi)
+        var cwd = Directory.GetCurrentDirectory();
+        var candidates = new[]
+        {
+            cwd,
+            Path.Combine(cwd, "..", "TodoList.WebApi"),
+            Path.Combine(cwd, "..", "..", "TodoList.WebApi"),
+        };
+        var basePath = candidates.FirstOrDefault(p => File.Exists(Path.Combine(p, "appsettings.json"))) ?? cwd;
+
         var cfg = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", true)
-            .AddJsonFile($"appsettings.{env}.json", true)
-            .AddEnvironmentVariables()
+            .SetBasePath(basePath)
+            .AddJsonFile("appsettings.developer.json", optional: true, reloadOnChange: false)
+            .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: false)
+            .AddEnvironmentVariables() // cho phép override: ConnectionStrings__Default
             .Build();
 
-        var connStr = cfg.GetConnectionString("Default")
-                      ?? throw new InvalidOperationException("Missing ConnectionStrings:Default");
+        var conn = cfg.GetConnectionString("Default")
+                   ?? Environment.GetEnvironmentVariable("ConnectionStrings__Default")
+                   ?? throw new InvalidOperationException("Missing ConnectionStrings:Default");
 
         var opts = new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(connStr, b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
+            .UseNpgsql(conn, b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName))
+            .Options;
 
-        return new AppDbContext(opts.Options);
+        return new AppDbContext(opts);
     }
 }

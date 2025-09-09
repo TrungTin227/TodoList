@@ -487,4 +487,7 @@ fabric.properties
 !.idea/codeStyles
 !.idea/runConfigurations
 
+.idea/
+*.DotSettings.user
+
 # End of https://www.toptal.com/developers/gitignore/api/csharp,jetbrains+all

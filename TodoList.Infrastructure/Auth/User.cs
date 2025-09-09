@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Identity;
+
 namespace TodoList.Infrastructure.Auth;
 
-public sealed  class User : IdentityUser<Guid>
+public sealed class User : IdentityUser<Guid>, IAuditable, ISoftDelete
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string FirstName { get; set; } = default!;
+    public string LastName { get; set; } = default!;
     public string FullName => $"{LastName} {FirstName}".Trim();
     public Gender Gender { get; set; }
-    public bool IsFirstLogin { get; set; } = true; // Mặc định là true, sẽ được set thành false khi người dùng đăng nhập lần đầu tiên
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public bool IsFirstLogin { get; set; } = true;
 
-    // Lưu Guid của User đã tạo
-    public Guid CreatedBy { get; set; }
+    // Audit
+    public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
+    public Guid? CreatedBy { get; set; }
+    public DateTime? UpdatedAtUtc { get; set; }
+    public Guid? UpdatedBy { get; set; }
 
-    public DateTime UpdatedAt { get; set; }
-
-    // Lưu Guid của User đã cập nhật
-    public Guid UpdatedBy { get; set; }
-
+    // Soft delete
     public bool IsDeleted { get; set; }
-
+    public DateTime? DeletedAtUtc { get; set; }
+    public Guid? DeletedBy { get; set; }
 }

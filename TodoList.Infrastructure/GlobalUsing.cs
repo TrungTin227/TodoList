@@ -2,4 +2,10 @@
 global using TodoList.Domain.Enums;
 global using TodoList.Domain.Common;
 global using TodoList.Infrastructure.Persistence;
-
+global using TodoList.Infrastructure.Services;
+global using TodoList.Application.Common;
+global using TodoList.Application.Common.Interfaces;
+global using TodoList.Application.Common.Results;
+global using TodoList.Application.Features.Auth.DTOs;
+global using TodoList.Application.Auth.DTOs;
+global using TodoList.Infrastructure.Auth.Implementations;

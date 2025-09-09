@@ -26,12 +26,19 @@ public static class PresentationExtensions
     public static WebApplication UsePresentation(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
+        {
             app.UseDeveloperExceptionPage();
+
+            // Redirect "/" -> "/scalar"
+            app.MapGet("/", () => TypedResults.Redirect("/scalar"))
+                .ExcludeFromDescription();
+        }
         else
+        {
             app.UseGlobalExceptionHandler();
-
-        app.UseGlobalExceptionHandler();
-
+            // app.MapGet("/", () => TypedResults.Redirect("/scalar")).ExcludeFromDescription(); // nếu muốn prod cũng redirect
+        }
+        
         app.UseHttpsRedirection();   
         app.UseAuthentication();
         app.UseAuthorization();

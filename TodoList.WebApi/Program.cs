@@ -1,21 +1,29 @@
-using Microsoft.AspNetCore.Identity;
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddApplication()
-    .AddPresentation()
-    .AddDatabase(builder.Configuration)
-    .AddApiDocs();
+// --- 1. Cấu hình đăng ký dịch vụ (Dependency Injection) ---
 
-builder.Services.AddHostedService<DbInitializerHostedService>();
-// 1. Gọi phương thức mở rộng từ lớp Infrastructure
-builder.Services.AddIdentityInfrastructure(builder.Configuration)
-    // 2. Bổ sung các dịch vụ chỉ dành cho web tại đây
-    .AddSignInManager()
-    .AddDefaultTokenProviders();
+// Lấy các đối tượng cần thiết để truyền vào các phương thức mở rộng
+var services = builder.Services;
+var configuration = builder.Configuration;
+services.AddHttpContextAccessor();
+// Đăng ký dịch vụ theo từng tầng một cách rõ ràng
+services
+    .AddApplication() // Đăng ký dịch vụ của tầng Application (MediatR, AutoMapper, Validators...)
+    .AddInfrastructureServices(configuration)// Đăng ký TOÀN BỘ dịch vụ của tầng Infrastructure
+    .AddIdentityAndAuthentication(builder.Configuration)
+    .AddPresentation(); // Đăng ký dịch vụ của tầng Presentation/API (Controllers, API Docs, CORS...)
+services.AddApiDocs();
 
+
+// --- 2. Xây dựng ứng dụng ---
 var app = builder.Build();
-app.UsePresentation();   // ExceptionHandler + AuthZ + Controllers + Swagger (dev)
+
+
+// --- 3. Cấu hình HTTP Request Pipeline (Middleware) ---
+
+// Sử dụng phương thức mở rộng của tầng Presentation để cấu hình pipeline
+// Điều này giúp đóng gói logic nhưng vẫn giữ được sự rõ ràng
+app.UsePresentation(); 
 app.UseApiDocs();
+
 app.Run();
